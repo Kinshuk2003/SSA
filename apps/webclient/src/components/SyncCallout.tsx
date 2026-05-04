@@ -47,12 +47,21 @@ export function SyncCallout({ state, lastSyncAt, nextSyncAt, recordsTotal, onTri
 
         <span style={{ flex: 1 }} />
 
-        <Button
-          icon="refresh"
-          text="Trigger sync"
-          disabled={state === 'running'}
-          onClick={onTrigger}
-        />
+        <div className="ssa-sync-trigger-wrap">
+          <Button
+            icon="refresh"
+            text="Retry sync"
+            intent={state === 'failed' ? Intent.DANGER : Intent.NONE}
+            disabled={state !== 'failed'}
+            onClick={onTrigger}
+            title={state !== 'failed' ? 'Only retriggers if the last sync failed or did not run' : undefined}
+          />
+          {state !== 'failed' && (
+            <span className="ssa-sync-trigger-hint">
+              {state === 'running' ? 'Sync in progress…' : 'Runs automatically on schedule'}
+            </span>
+          )}
+        </div>
       </div>
     </Callout>
   );

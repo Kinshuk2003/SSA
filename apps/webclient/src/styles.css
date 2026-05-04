@@ -99,6 +99,19 @@ input.ssa-mono {
   color: #8f99a8;
 }
 
+.ssa-sync-trigger-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.ssa-sync-trigger-hint {
+  font-size: 11px;
+  color: #8f99a8;
+  white-space: nowrap;
+}
+
 .ssa-meta-key {
   margin-right: 4px;
   opacity: 0.7;
