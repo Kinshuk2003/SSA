@@ -27,6 +27,7 @@ export function SyncCallout({ state, lastSyncAt, nextSyncAt, recordsTotal, onTri
     <Callout
       className="ssa-sync-callout"
       intent={INTENT_MAP[state]}
+      icon={null}
     >
       <div className="ssa-sync-inner">
         {state === 'running'
