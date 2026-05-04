@@ -177,6 +177,27 @@ export async function fetchSyncStatus(): Promise<DashboardSyncMeta> {
   };
 }
 
-export async function createSatellite(_form: SatelliteForm): Promise<void> {
-  await new Promise<void>((resolve) => setTimeout(resolve, 1200)); // mock delay
+const STATUS_TO_OPS: Record<string, string | null> = {
+  OPERATIONAL: '+', PARTIAL: 'P', DECAYED: null, DEBRIS: null, UNKNOWN: null,
+};
+
+export async function createSatellite(form: SatelliteForm): Promise<void> {
+  const isDecayed = form.status === 'DECAYED';
+  await request<Satellite>('/api/satellites', {
+    method: 'POST',
+    body: JSON.stringify({
+      norad_cat_id: parseInt(form.norad, 10),
+      object_name:  form.name.trim(),
+      object_id:    form.cospar.trim(),
+      object_type:  TYPE_TO_API[form.type] ?? 'UNK',
+      ops_status:   STATUS_TO_OPS[form.status] ?? null,
+      owner:        form.owner.trim() || null,
+      launch_date:  form.launch.trim() || null,
+      decay_date:   isDecayed ? new Date().toISOString().split('T')[0] : null,
+      period:       form.period    ? parseFloat(form.period)    : null,
+      inclination:  form.incl      ? parseFloat(form.incl)      : null,
+      apogee:       form.apogee    ? parseInt(form.apogee, 10)  : null,
+      perigee:      form.perigee   ? parseInt(form.perigee, 10) : null,
+    }),
+  });
 }
