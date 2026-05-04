@@ -44,7 +44,7 @@ export function FilterPopover({
               onClick={() => onToggle(colKey, v)}
             >
               <span className="ssa-filter-cb">
-                {checked && <span className="bp5-icon bp5-icon-tick" style={{ fontSize: 9 }} />}
+                {checked && <span className="bp6-icon bp6-icon-tick" style={{ fontSize: 9 }} />}
               </span>
               <span className="ssa-filter-label">{v}</span>
               <span className="ssa-filter-count">{counts[v] ?? 0}</span>

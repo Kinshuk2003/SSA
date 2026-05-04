@@ -149,7 +149,7 @@ export function Dashboard() {
   }, []);
 
   return (
-    <div className="bp5-dark ssa-app" onClick={() => setOpenFilter(null)}>
+    <div className="bp6-dark ssa-app" onClick={() => setOpenFilter(null)}>
       <AppNavbar
         search={search}
         onSearchChange={onSearchChange}
@@ -158,7 +158,7 @@ export function Dashboard() {
 
       {error && (
         <div className="ssa-error-banner">
-          Failed to load satellites: {error}
+          Failed to load objects: {error}
         </div>
       )}
 

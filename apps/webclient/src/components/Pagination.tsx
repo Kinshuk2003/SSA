@@ -19,8 +19,8 @@ export function Pagination({ page, totalPages, start, end, total, onPrev, onNext
       </span>
       <div className="ssa-pagination-right">
         <span className="ssa-pagination-meta">Page {page} of {totalPages}</span>
-        <Button minimal text="← Previous" disabled={page <= 1}  onClick={onPrev} />
-        <Button minimal text="Next →"      disabled={!hasNext}  onClick={onNext} />
+        <Button className="ssa-pagination-button" text="← Previous" disabled={page <= 1}  onClick={onPrev} />
+        <Button className="ssa-pagination-button" text="Next →"      disabled={!hasNext}  onClick={onNext} />
       </div>
     </div>
   );

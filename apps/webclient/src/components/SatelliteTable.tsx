@@ -29,7 +29,20 @@ export function SatelliteTable({
 }: SatelliteTableProps) {
   return (
     <div className="ssa-table-wrap">
-      <HTMLTable striped interactive className="ssa-table ssa-table--condensed">
+      <HTMLTable striped interactive className="ssa-table">
+        <colgroup>
+          <col className="ssa-col-norad" />
+          <col className="ssa-col-name" />
+          <col className="ssa-col-cospar" />
+          <col className="ssa-col-type" />
+          <col className="ssa-col-status" />
+          <col className="ssa-col-owner" />
+          <col className="ssa-col-orbit" />
+          <col className="ssa-col-launch" />
+          <col className="ssa-col-period" />
+          <col className="ssa-col-incl" />
+          <col className="ssa-col-appe" />
+        </colgroup>
         <thead>
           <tr>
             {COLUMNS.map((col) => (
@@ -54,7 +67,7 @@ export function SatelliteTable({
           {rows.map((row) => (
             <tr key={row.norad}>
               <td className="ssa-mono ssa-muted">{row.norad}</td>
-              <td className="ssa-name">{row.name}</td>
+              <td className="ssa-name" title={row.name}>{row.name}</td>
               <td className="ssa-mono ssa-muted">{row.cospar}</td>
               <td>
                 <Tag minimal intent={typeIntent(row.type)} className="ssa-mono">
@@ -62,17 +75,17 @@ export function SatelliteTable({
                 </Tag>
               </td>
               <td><StatusIndicator value={row.status} /></td>
-              <td>{row.owner}</td>
+              <td title={row.owner ?? undefined}>{row.owner}</td>
               <td>
                 <Tag minimal intent={orbitIntent(row.orbit)} className="ssa-mono">
                   {row.orbit}
                 </Tag>
               </td>
               <td className="ssa-mono ssa-muted">{row.launch}</td>
-              <td className="ssa-mono-num">{row.period.toFixed(2)}</td>
-              <td className="ssa-mono-num">{row.incl.toFixed(2)}</td>
+              <td className="ssa-mono-num">{row.period != null ? row.period.toFixed(2) : '—'}</td>
+              <td className="ssa-mono-num">{row.incl != null ? row.incl.toFixed(2) : '—'}</td>
               <td className="ssa-mono-num">
-                {row.apogee.toLocaleString()} / {row.perigee.toLocaleString()}
+                {row.apogee != null ? row.apogee.toLocaleString() : '—'} / {row.perigee != null ? row.perigee.toLocaleString() : '—'}
               </td>
             </tr>
           ))}

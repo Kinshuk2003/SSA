@@ -13,7 +13,7 @@ export function StatusIndicator({ value, running = false }: StatusIndicatorProps
   return (
     <span className={`ssa-status${running ? ' ssa-status--running' : ''}`}>
       <span className="ssa-status-dot" style={{ background: dotColor }} />
-      <span style={{ fontSize: 13, color: 'var(--pt-dark-text, #f6f7f9)' }}>{value}</span>
+      <span style={{ fontSize: 13, color: '#f6f7f9' }}>{value}</span>
     </span>
   );
 }

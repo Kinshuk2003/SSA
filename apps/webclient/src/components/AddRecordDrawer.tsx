@@ -79,7 +79,7 @@ export function AddRecordDrawer({ isOpen, onClose }: AddRecordDrawerProps) {
         <div className="ssa-drawer-header">
           <div className="ssa-drawer-title-wrap">
             <Icon icon="satellite" className="ssa-drawer-icon" />
-            <span className="ssa-drawer-title">New Satellite Record</span>
+            <span className="ssa-drawer-title">New Object Record</span>
           </div>
           <button className="ssa-drawer-close" onClick={onClose} aria-label="Close">✕</button>
         </div>

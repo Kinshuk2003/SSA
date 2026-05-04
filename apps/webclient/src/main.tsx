@@ -7,7 +7,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 
-document.body.classList.add('bp5-dark');
+document.body.classList.add('bp6-dark');
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

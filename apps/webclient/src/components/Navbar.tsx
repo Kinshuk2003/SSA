@@ -11,7 +11,7 @@ export function AppNavbar({ search, onSearchChange, onAddRecord }: NavbarProps) 
     <header className="ssa-navbar">
       <div className="ssa-navbar-left">
         <span className="ssa-logo">SSA</span>
-        <span className="ssa-navbar-title">Mission Control</span>
+        <span className="ssa-navbar-title">Mission Control Dashboard</span>
       </div>
 
       <div className="ssa-navbar-right">

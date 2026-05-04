@@ -59,7 +59,7 @@ export function useSatellites(params: UseSatellitesParams): UseSatellitesResult 
       })
       .catch((err: unknown) => {
         if (!ctl.signal.aborted) {
-          setError(err instanceof Error ? err.message : 'Failed to load satellites');
+          setError(err instanceof Error ? err.message : 'Failed to load objects');
           setIsLoading(false);
         }
       });
