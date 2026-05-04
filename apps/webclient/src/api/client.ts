@@ -162,6 +162,10 @@ export async function fetchSatellites(params: FetchSatellitesParams): Promise<Sa
 }
 
 
+export async function triggerSync(): Promise<void> {
+  await request<{ jobId: string }>('/api/sync/trigger', { method: 'POST' });
+}
+
 export async function fetchSyncStatus(): Promise<DashboardSyncMeta> {
   const raw = await request<ApiSyncStatus>('/api/sync/status');
 

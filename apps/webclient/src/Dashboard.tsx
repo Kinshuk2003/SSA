@@ -9,7 +9,8 @@ import { AddRecordDrawer }  from './components/AddRecordDrawer';
 import { useSatellites }    from './hooks/useSatellites';
 import { useSyncStatus }    from './hooks/useSyncStatus';
 import { COLUMNS, FILTER_COLS } from './lib/columns';
-import { showSuccess } from './lib/toaster';
+import { showSuccess, showError } from './lib/toaster';
+import { triggerSync } from './api/client';
 import type { FilterCol } from './types';
 
 const PAGE_SIZE = 100;
@@ -142,10 +143,13 @@ export function Dashboard() {
     setPage((p) => p - 1);
   }, [page]);
 
-  const onTriggerSync = useCallback(() => {
-    setTimeout(async () => {
-      await showSuccess('Sync complete — catalog updated');
-    }, 3500);
+  const onTriggerSync = useCallback(async () => {
+    try {
+      await triggerSync();
+      await showSuccess('Sync triggered — catalog update in progress');
+    } catch (err) {
+      await showError(err instanceof Error ? err.message : 'Failed to trigger sync');
+    }
   }, []);
 
   return (
@@ -167,7 +171,7 @@ export function Dashboard() {
         lastSyncAt={polled.lastSyncAt}
         nextSyncAt={polled.nextSyncAt}
         recordsTotal={polled.recordsTotal}
-        onTrigger={onTriggerSync}
+        onTrigger={() => { void onTriggerSync(); }}
       />
 
       <Toolbar
