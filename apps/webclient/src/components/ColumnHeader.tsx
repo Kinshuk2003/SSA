@@ -9,7 +9,6 @@ interface ColumnHeaderProps {
   sortDir:       'asc' | 'desc';
   onSort:        (key: string) => void;
   filterValues?: string[];
-  filterCounts?: Record<string, number>;
   activeFilters?: Set<string>;
   onToggleFilter?: (col: FilterCol, val: string) => void;
   onClearFilter?:  (col: FilterCol) => void;
@@ -19,7 +18,7 @@ interface ColumnHeaderProps {
 
 export function ColumnHeader({
   col, sortKey, sortDir, onSort,
-  filterValues = [], filterCounts = {}, activeFilters = new Set(),
+  filterValues = [], activeFilters = new Set(),
   onToggleFilter, onClearFilter,
   openFilter, setOpenFilter,
 }: ColumnHeaderProps) {
@@ -53,7 +52,7 @@ export function ColumnHeader({
                 <FilterPopover
                   colKey={col.key as FilterCol}
                   values={filterValues}
-                  counts={filterCounts}
+
                   active={activeFilters}
                   onToggle={onToggleFilter}
                   onClear={onClearFilter}

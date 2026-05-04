@@ -4,7 +4,6 @@ import type { FilterCol } from '../types';
 interface FilterPopoverProps {
   colKey:       FilterCol;
   values:       string[];
-  counts:       Record<string, number>;
   active:       Set<string>;
   onToggle:     (col: FilterCol, val: string) => void;
   onClear:      (col: FilterCol) => void;
@@ -12,7 +11,7 @@ interface FilterPopoverProps {
 }
 
 export function FilterPopover({
-  colKey, values, counts, active, onToggle, onClear, onClose,
+  colKey, values, active, onToggle, onClear, onClose,
 }: FilterPopoverProps) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -47,7 +46,6 @@ export function FilterPopover({
                 {checked && <span className="bp6-icon bp6-icon-tick" style={{ fontSize: 9 }} />}
               </span>
               <span className="ssa-filter-label">{v}</span>
-              <span className="ssa-filter-count">{counts[v] ?? 0}</span>
             </div>
           );
         })}

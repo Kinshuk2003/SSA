@@ -13,7 +13,6 @@ interface SatelliteTableProps {
   onSort:         (key: string) => void;
   filters:        Record<FilterCol, Set<string>>;
   filterValues:   Record<FilterCol, string[]>;
-  filterCounts:   Record<FilterCol, Record<string, number>>;
   onToggleFilter: (col: FilterCol, val: string) => void;
   onClearFilter:  (col: FilterCol) => void;
   openFilter:     string | null;
@@ -23,7 +22,7 @@ interface SatelliteTableProps {
 export function SatelliteTable({
   rows, isLoading,
   sortKey, sortDir, onSort,
-  filters, filterValues, filterCounts,
+  filters, filterValues,
   onToggleFilter, onClearFilter,
   openFilter, setOpenFilter,
 }: SatelliteTableProps) {
@@ -53,7 +52,7 @@ export function SatelliteTable({
                 sortDir={sortDir}
                 onSort={onSort}
                 filterValues={col.filterable ? (filterValues[col.key as FilterCol] ?? []) : []}
-                filterCounts={col.filterable ? (filterCounts[col.key as FilterCol] ?? {}) : {}}
+
                 activeFilters={col.filterable ? (filters[col.key as FilterCol] ?? new Set()) : new Set()}
                 onToggleFilter={onToggleFilter}
                 onClearFilter={onClearFilter}

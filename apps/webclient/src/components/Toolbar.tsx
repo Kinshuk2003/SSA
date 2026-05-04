@@ -10,7 +10,7 @@ interface ToolbarProps {
 
 export function Toolbar({ search, filters, onRemoveFilter, onClearAll }: ToolbarProps) {
   const chips: Array<{ col: FilterCol; val: string }> = [];
-  for (const col of ['type', 'status', 'owner', 'orbit'] as FilterCol[]) {
+  for (const col of ['type', 'status', 'owner'] as FilterCol[]) {
     for (const val of filters[col]) {
       chips.push({ col, val });
     }

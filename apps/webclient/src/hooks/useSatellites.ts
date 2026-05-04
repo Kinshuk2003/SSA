@@ -37,14 +37,12 @@ export function useSatellites(params: UseSatellitesParams): UseSatellitesResult 
 
     const typeFilter   = [...(params.filters['type']   ?? [])][0];
     const statusFilter = [...(params.filters['status'] ?? [])][0];
-    const orbitFilter  = [...(params.filters['orbit']  ?? [])][0];
     const ownerFilter  = [...(params.filters['owner']  ?? [])][0];
 
     fetchSatellites({
       search:       params.search || undefined,
       typeFilter,
       statusFilter,
-      orbitFilter,
       ownerSearch:  ownerFilter,
       sortApiKey:   col?.sortApiKey,
       sortOrder:    params.sortOrder,

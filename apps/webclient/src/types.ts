@@ -1,7 +1,7 @@
 export type DisplayType   = 'PAYLOAD' | 'ROCKET' | 'DEBRIS' | 'UNKNOWN';
 export type DisplayStatus = 'OPERATIONAL' | 'PARTIAL' | 'DEBRIS' | 'DECAYED' | 'UNKNOWN';
 export type DisplayOrbit  = 'LEO' | 'MEO' | 'GEO' | 'GTO' | 'HEO';
-export type FilterCol     = 'type' | 'status' | 'owner' | 'orbit';
+export type FilterCol     = 'type' | 'status' | 'owner';
 
 export interface ViewSatellite {
   norad:   string;         // String(norad_cat_id)

@@ -14,12 +14,12 @@ export const COLUMNS: Column[] = [
   { key: 'type',   label: 'TYPE',         sortable: true,  filterable: true,  align: 'left'                              },
   { key: 'status', label: 'STATUS',       sortable: true,  filterable: true,  align: 'left'                              },
   { key: 'owner',  label: 'OWNER',        sortable: true,  filterable: true,  align: 'left'                              },
-  { key: 'orbit',  label: 'ORBIT',        sortable: true,  filterable: true,  align: 'left'                              },
+  { key: 'orbit',  label: 'ORBIT',        sortable: true,  filterable: false, align: 'left'                              },
   { key: 'launch', label: 'LAUNCH',       sortable: true,  filterable: false, align: 'left',  sortApiKey: 'launch_date'  },
   { key: 'period', label: 'PERIOD (MIN)', sortable: true,  filterable: false, align: 'right', sortApiKey: 'period'       },
   { key: 'incl',   label: 'INCL (°)',     sortable: true,  filterable: false, align: 'right', sortApiKey: 'inclination'  },
   { key: 'ap_pe',  label: 'AP / PE (KM)', sortable: true,  filterable: false, align: 'right', sortApiKey: 'apogee'       },
 ];
 
-export type FilterCol = 'type' | 'status' | 'owner' | 'orbit';
-export const FILTER_COLS: FilterCol[] = ['type', 'status', 'owner', 'orbit'];
+export type FilterCol = 'type' | 'status' | 'owner';
+export const FILTER_COLS: FilterCol[] = ['type', 'status', 'owner'];

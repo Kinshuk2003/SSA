@@ -8,7 +8,7 @@ import { Pagination }       from './components/Pagination';
 import { AddRecordDrawer }  from './components/AddRecordDrawer';
 import { useSatellites }    from './hooks/useSatellites';
 import { useSyncStatus }    from './hooks/useSyncStatus';
-import { COLUMNS, FILTER_COLS } from './lib/columns';
+import { COLUMNS } from './lib/columns';
 import { showSuccess, showError } from './lib/toaster';
 import { triggerSync } from './api/client';
 import type { FilterCol } from './types';
@@ -16,7 +16,7 @@ import type { FilterCol } from './types';
 const PAGE_SIZE = 100;
 
 function emptyFilters(): Record<FilterCol, Set<string>> {
-  return { type: new Set(), status: new Set(), owner: new Set(), orbit: new Set() };
+  return { type: new Set(), status: new Set(), owner: new Set() };
 }
 
 export function Dashboard() {
@@ -67,26 +67,12 @@ export function Dashboard() {
   
   const filterValues = useMemo(
     () => ({
-      type:   [...new Set(data.map((d) => d.type))].sort(),
-      status: [...new Set(data.map((d) => d.status))].sort(),
-      owner:  [...new Set(data.map((d) => d.owner))].sort(),
-      orbit:  [...new Set(data.map((d) => d.orbit))].sort(),
+      type:   ['PAYLOAD', 'ROCKET', 'DEBRIS', 'UNKNOWN'] as string[],
+      status: ['OPERATIONAL', 'PARTIAL'] as string[],
+      owner:  [...new Set(data.map((d) => d.owner).filter((o) => o !== '—'))].sort(),
     }),
     [data]
   );
-
-  const filterCounts = useMemo(() => {
-    const out: Record<FilterCol, Record<string, number>> = {
-      type: {}, status: {}, owner: {}, orbit: {},
-    };
-    for (const d of data) {
-      for (const col of FILTER_COLS) {
-        const v = d[col];
-        out[col][v] = (out[col][v] ?? 0) + 1;
-      }
-    }
-    return out;
-  }, [data]);
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
   const pageStart  = total === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
@@ -204,7 +190,7 @@ export function Dashboard() {
         onSort={onSort}
         filters={filters}
         filterValues={filterValues}
-        filterCounts={filterCounts}
+
         onToggleFilter={onToggleFilter}
         onClearFilter={onClearFilter}
         openFilter={openFilter}

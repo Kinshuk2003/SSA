@@ -1,4 +1,4 @@
-import { Callout, Button, Intent, Spinner, SpinnerSize } from '@blueprintjs/core';
+import { Callout, Button, Intent, Icon, Spinner, SpinnerSize } from '@blueprintjs/core';
 import type { SyncBannerState, DashboardSyncMeta } from '../types';
 
 function fmtUTC(d: Date | null): string {
@@ -27,13 +27,12 @@ export function SyncCallout({ state, lastSyncAt, nextSyncAt, recordsTotal, onTri
     <Callout
       className="ssa-sync-callout"
       intent={INTENT_MAP[state]}
-      icon={
-        state === 'running'
-          ? <Spinner size={SpinnerSize.SMALL} intent={Intent.WARNING} />
-          : state === 'failed' ? 'warning-sign' : 'info-sign'
-      }
     >
       <div className="ssa-sync-inner">
+        {state === 'running'
+          ? <Spinner size={SpinnerSize.SMALL} intent={Intent.WARNING} />
+          : <Icon icon={state === 'failed' ? 'warning-sign' : 'info-sign'} size={14} />
+        }
         <strong className="ssa-sync-title">{TITLE_MAP[state]}</strong>
 
         <div className="ssa-sync-meta">
