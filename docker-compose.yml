@@ -1,0 +1,87 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER:     ${POSTGRES_USER:-ssa}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ssa_dev}
+      POSTGRES_DB:       ${POSTGRES_DB:-ssa}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ssa} -d ${POSTGRES_DB:-ssa}"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile.migrate
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-ssa}:${POSTGRES_PASSWORD:-ssa_dev}@postgres:5432/${POSTGRES_DB:-ssa}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: on-failure
+
+  mission-control-admin:
+    build:
+      context: .
+      dockerfile: apps/mission-control-admin/Dockerfile
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-ssa}:${POSTGRES_PASSWORD:-ssa_dev}@postgres:5432/${POSTGRES_DB:-ssa}
+      REDIS_URL:    redis://redis:6379
+      PORT:         "3000"
+      CORS_ORIGIN:  ${CORS_ORIGIN:-*}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  ingestion-service:
+    build:
+      context: .
+      dockerfile: apps/ingestion-service/Dockerfile
+    environment:
+      DATABASE_URL:                  postgres://${POSTGRES_USER:-ssa}:${POSTGRES_PASSWORD:-ssa_dev}@postgres:5432/${POSTGRES_DB:-ssa}
+      REDIS_URL:                     redis://redis:6379
+      CELESTRAK_URL:                 ${CELESTRAK_URL:-https://celestrak.org/pub/satcat.csv}
+      BATCH_SIZE:                    ${BATCH_SIZE:-500}
+      STALE_LOCK_THRESHOLD_MINUTES:  ${STALE_LOCK_THRESHOLD_MINUTES:-60}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  webclient:
+    build:
+      context: .
+      dockerfile: apps/webclient/Dockerfile
+    ports:
+      - "${WEBCLIENT_PORT:-8080}:80"
+    depends_on:
+      - mission-control-admin
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

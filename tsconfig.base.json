@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2021",
+    "lib": ["ES2021"],
+    "strict": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@ssa/shared": ["libs/shared/src/index.ts"],
+      "@ssa/shared/*": ["libs/shared/src/*"],
+      "@ssa/db": ["libs/db/src/index.ts"],
+      "@ssa/db/*": ["libs/db/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "tmp", "dist"]
+}

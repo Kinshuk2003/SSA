@@ -1,0 +1,10 @@
+{
+  "name": "@ssa/shared",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": "./src/index.js"
+  }
+}

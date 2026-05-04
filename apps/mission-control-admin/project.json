@@ -1,0 +1,44 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "mission-control-admin",
+  "projectType": "application",
+  "sourceRoot": "apps/mission-control-admin/src",
+  "tags": ["scope:mission-control-admin", "type:app"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/mission-control-admin",
+        "tsConfig": "apps/mission-control-admin/tsconfig.json",
+        "main": "apps/mission-control-admin/src/main.ts",
+        "assets": []
+      }
+    },
+    "serve": {
+      "executor": "@nx/node:node",
+      "options": {
+        "buildTarget": "mission-control-admin:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["apps/mission-control-admin/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/mission-control-admin"],
+      "options": {
+        "jestConfig": "apps/mission-control-admin/jest.config.ts"
+      }
+    },
+    "docker-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker build -f apps/mission-control-admin/Dockerfile -t ssa-mission-control-admin ."
+      }
+    }
+  }
+}

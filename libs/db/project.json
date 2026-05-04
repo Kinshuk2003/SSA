@@ -1,0 +1,38 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "db",
+  "projectType": "library",
+  "sourceRoot": "libs/db/src",
+  "tags": ["scope:db", "type:lib"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/db",
+        "tsConfig": "libs/db/tsconfig.json",
+        "main": "libs/db/src/index.ts",
+        "assets": [
+          {
+            "input": "libs/db/src/migrations",
+            "glob": "*.sql",
+            "output": "src/migrations"
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/db/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/db"],
+      "options": {
+        "jestConfig": "libs/db/jest.config.ts"
+      }
+    }
+  }
+}

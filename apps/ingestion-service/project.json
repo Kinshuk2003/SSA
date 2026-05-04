@@ -1,0 +1,44 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "ingestion-service",
+  "projectType": "application",
+  "sourceRoot": "apps/ingestion-service/src",
+  "tags": ["scope:ingestion-service", "type:app"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/ingestion-service",
+        "tsConfig": "apps/ingestion-service/tsconfig.json",
+        "main": "apps/ingestion-service/src/main.ts",
+        "assets": []
+      }
+    },
+    "serve": {
+      "executor": "@nx/node:node",
+      "options": {
+        "buildTarget": "ingestion-service:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["apps/ingestion-service/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/ingestion-service"],
+      "options": {
+        "jestConfig": "apps/ingestion-service/jest.config.ts"
+      }
+    },
+    "docker-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker build -f apps/ingestion-service/Dockerfile -t ssa-ingestion-service ."
+      }
+    }
+  }
+}
